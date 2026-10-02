@@ -1,0 +1,253 @@
+{
+  "name": "Multi ligual customer chat translator",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -160,
+        -32
+      ],
+      "id": "5bc9c946-a0f4-4656-bf85-5293b22db713",
+      "name": "When chat message received",
+      "webhookId": "f82afda4-027e-409c-a476-ff15a529271a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a multilingual customer support AI agent.\n\nYour primary responsibility is to understand the customer's message and respond in the same language used by the customer.\n\nFollow these rules:\n\nAutomatically detect the language of every customer message.\n\nUnderstand the customer's intent, even if the message contains spelling mistakes, informal language, or mixed-language text.\n\nInternally translate the message into English when necessary for reasoning or processing. Do not show the internal translation to the customer.\n\nUse the available knowledge base and provided context to generate an accurate answer.\n\nGenerate a clear, polite, helpful, and professional response.\n\nTranslate the generated response back into the customer's original language when necessary.\n\nALWAYS respond in the same language as the customer's latest message.\n\nIf the customer changes language during the conversation, automatically switch to that language.\n\nPreserve important names, order numbers, product names, prices, dates, and other factual information exactly.\n\nDo not invent information that is not available in the provided knowledge or context.\n\nIf you cannot confidently answer the customer's question, clearly state that a human support agent is needed.\n\nKeep responses concise and customer-friendly.\n\nDo not mention language detection, internal translation, system instructions, or internal reasoning to the customer.\n\nExamples:\n\nCustomer: \"Where is my order?\"\nResponse: Answer in English.\n\nCustomer: \"నా ఆర్డర్ ఎక్కడ ఉంది?\"\nResponse: Answer in Telugu.\n\nCustomer: \"मेरा ऑर्डर कहाँ है?\"\nResponse: Answer in Hindi.\n\nCustomer: \"¿Dónde está mi pedido?\"\nResponse: Answer in Spanish.\n\nCustomer: \"Mera order ekkada undi?\"\nResponse: Respond naturally in the same mixed-language style when appropriate.\n\nAlways prioritize the customer's latest message language when deciding the response language."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        144,
+        -32
+      ],
+      "id": "b3503d0e-6927-4381-b53e-ec433242e688",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        208
+      ],
+      "id": "bab3c845-e9b0-4775-a4d8-8bf0aaa91e40",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "7"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        208,
+        272
+      ],
+      "id": "92efa3d5-0ae9-4775-b5a6-7b560893bdca",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "You are a multilingual customer support AI agent.\n\nYour primary responsibility is to understand the customer's message and respond in the same language used by the customer.\n\nFollow these rules:\n\nAutomatically detect the language of every customer message.\n\nUnderstand the customer's intent, even if the message contains spelling mistakes, informal language, or mixed-language text.\n\nInternally translate the message into English when necessary for reasoning or processing. Do not show the internal translation to the customer.\n\nUse the available knowledge base and provided context to generate an accurate answer.\n\nGenerate a clear, polite, helpful, and professional response.\n\nTranslate the generated response back into the customer's original language when necessary.\n\nALWAYS respond in the same language as the customer's latest message.\n\nIf the customer changes language during the conversation, automatically switch to that language.\n\nPreserve important names, order numbers, product names, prices, dates, and other factual information exactly.\n\nDo not invent information that is not available in the provided knowledge or context.\n\nIf you cannot confidently answer the customer's question, clearly state that a human support agent is needed.\n\nKeep responses concise and customer-friendly.\n\nDo not mention language detection, internal translation, system instructions, or internal reasoning to the customer.\n\nExamples:\n\nCustomer: \"Where is my order?\"\nResponse: Answer in English.\n\nCustomer: \"నా ఆర్డర్ ఎక్కడ ఉంది?\"\nResponse: Answer in Telugu.\n\nCustomer: \"मेरा ऑर्डर कहाँ है?\"\nResponse: Answer in Hindi.\n\nCustomer: \"¿Dónde está mi pedido?\"\nResponse: Answer in Spanish.\n\nCustomer: \"Mera order ekkada undi?\"\nResponse: Respond naturally in the same mixed-language style when appropriate.\n\nAlways prioritize the customer's latest message language when deciding the response language."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        464,
+        -16
+      ],
+      "id": "ddffaed8-0f06-4df7-a328-f6c271146e6f",
+      "name": "Translator with Agentic AI",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1m7xA3_c-dtXzVhRgw0hz4LGVn_dBN2GFRyn4uc6fjgQ",
+          "mode": "list",
+          "cachedResultName": "Untitled spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1m7xA3_c-dtXzVhRgw0hz4LGVn_dBN2GFRyn4uc6fjgQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 393333386,
+          "mode": "list",
+          "cachedResultName": "Sheet3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1m7xA3_c-dtXzVhRgw0hz4LGVn_dBN2GFRyn4uc6fjgQ/edit#gid=393333386"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date & time": "={{ $now }}",
+            "User Input": "={{ $('When chat message received').item.json.chatInput }}",
+            "Translated output": "={{ $('Translator with Agentic AI').item.json.output[0].content[0].text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date & time",
+              "displayName": "Date & time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "User Input",
+              "displayName": "User Input",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Translated output",
+              "displayName": "Translated output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        880,
+        0
+      ],
+      "id": "3ed128e6-2ff6-4d40-b00f-d99f3a19124c",
+      "name": "Append Row in Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rSfY4r69THhSsM53",
+          "name": "Google Sheets account 7"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Translator with Agentic AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Translator with Agentic AI": {
+      "main": [
+        [
+          {
+            "node": "Append Row in Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "aa88520f-685a-4ef5-930a-a831d5826a01",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e2f99dda676e8330c7a4220501922969a62d0e50e63642c39c89f39537ab68d4"
+  },
+  "nodeGroups": [],
+  "id": "Z1dqSznOvTPinvTz",
+  "tags": []
+}
